@@ -9,17 +9,24 @@ function displayCategories(categories) {
     const categoryContainer = document.getElementById("category-container");
     const categoryDiv = document.createElement("div");
     categoryDiv.innerHTML = `
-    <button onclick = "loadVideos('category/${cat.category_id}')" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+    <button id="category/${cat.category_id}" onclick = "loadVideos('category/${cat.category_id}')" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
     `;
     categoryContainer.appendChild(categoryDiv);
   });
 }
-
+function activatedButton(categoryId) {
+  const buttons = document.querySelectorAll(".active-btn");
+  buttons.forEach((btn) => btn.classList.remove("active-btn"));
+  const button = document.getElementById(`${categoryId}`);
+  button.classList.add("active-btn");
+}
 function loadVideos(categoryId = "videos") {
   const v = categoryId === "videos" ? "videos" : "category";
+  if (!(v === "videos")) activatedButton(categoryId);
   document.getElementById("video-container").innerHTML = "";
   const emptyPage = document.getElementById("empty-page");
   emptyPage.classList.add("hidden");
+
   fetch(`https://openapi.programming-hero.com/api/phero-tube/${categoryId}`)
     .then((response) => response.json())
     .then((data) => {
