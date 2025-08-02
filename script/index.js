@@ -14,19 +14,20 @@ function displayCategories(categories) {
     categoryContainer.appendChild(categoryDiv);
   });
 }
-function loadCategoryVideos(categoryId) {
-  fetch(`https://openapi.programming-hero.com/api/phero-tube/`)
-    .then((responsive) => responsive.json())
-    .then((data) => displayVideos(data.category));
-}
 
 function loadVideos(categoryId = "videos") {
   const v = categoryId === "videos" ? "videos" : "category";
   document.getElementById("video-container").innerHTML = "";
-  const url = `https://openapi.programming-hero.com/api/phero-tube/${categoryId}`;
+  const emptyPage = document.getElementById("empty-page");
+  emptyPage.classList.add("hidden");
   fetch(`https://openapi.programming-hero.com/api/phero-tube/${categoryId}`)
     .then((response) => response.json())
-    .then((data) => displayVideos(data[v]));
+    .then((data) => {
+      if (data[v].length === 0) {
+        emptyPage.classList.remove("hidden");
+      }
+      displayVideos(data[v]);
+    });
 }
 
 function formatTimeWithMonths(seconds) {

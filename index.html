@@ -25,7 +25,7 @@
         </div>
       </nav>
     </header>
-    <main>
+    <main id="main-content">
       <nav id="category-container" class="flex justify-center gap-4 p-4">
         <button
           id="all"
@@ -35,11 +35,16 @@
           All
         </button>
       </nav>
-
-      <div id="video-container" class="grid grid-cols-3 gap-4 p-4">
+      <div
+        id="empty-page"
+        class="flex flex-col items-center justify-center pt-16 gap-6"
+      >
+        <img src="assets/Icon.png" alt="" />
+        <h1 class="text-2xl font-bold">
+          Oops!! Sorry, There is no content here
+        </h1>
       </div>
-
-      
+      <div id="video-container" class="grid grid-cols-3 gap-4 p-4"></div>
     </main>
 
     <script src="script/index.js"></script>
