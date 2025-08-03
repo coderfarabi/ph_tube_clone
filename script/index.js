@@ -76,6 +76,48 @@ function formatTimeWithMonths(seconds) {
   } else return `${minutes}m ${seconds}s ago`;
 }
 
+function loadViewDetails(video_id) {
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${video_id}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      displayVideoDetails(data.video);
+    });
+}
+function displayVideoDetails(video){
+  document.getElementById("video_details").showModal();
+  const videoDetailsContainer = document.getElementById("video_details-container");
+  videoDetailsContainer.innerHTML = `
+    <div class="card p-2 pt-6">
+      <figure class="relative">
+        <img
+          class="rounded-lg w-96 h-[220px] object-cover"
+          src="${video.thumbnail}"
+          alt="thumbnail"
+        />
+      </figure>
+      <div class="flex gap-4 py-5 pl-3">
+        <div class="avatar w-6 h-6">
+          <div
+            class="ring-primary ring-offset-base-100 rounded-full ring-2 ring-offset-2"
+          >
+            <img src="${video.authors[0].profile_picture}" />
+          </div>
+        </div>
+        <div class="intro">
+          <h2 class="card-title">${video.title}</h2>
+          <p class="text-sm font-semibold text-gray-400">${
+            video.authors[0].profile_name
+          }</p>
+          <p class="text-sm text-gray-400">${video.others.views} views</p>
+        </div>
+      </div>
+      <p>${video.description}</p>
+    </div>
+  `;
+
+}
+
 function displayVideos(videos) {
   videos.forEach((video) => {
     const videoContainer = document.getElementById("video-container");
@@ -84,7 +126,7 @@ function displayVideos(videos) {
     <div class="card">
           <figure class="relative">
             <img
-              class="rounded-lg  w-full h-[220px] object-cover"
+              class="rounded-lg  w-96 h-[220px] object-cover"
               src="${video.thumbnail}"
               alt="thumbnail"
             />
@@ -118,7 +160,9 @@ function displayVideos(videos) {
               <p class="text-sm text-gray-400">${video.others.views} views</p>
             </div>
           </div>
-          <button class="btn btn-block">View Details</button>
+          <button onclick="loadViewDetails('${
+            video.video_id
+          }')" class="btn btn-block hover:bg-[#FF1F3D] hover:text-white" >View Details</button>
         </div>
     `;
     videoContainer.appendChild(videoDiv);

@@ -14,7 +14,7 @@
       .active-btn {
         background-color: #ff1f3d;
         color: white;
-        padding: 1.2rem ;
+        padding: 1.2rem;
         font-size: 1.1rem;
       }
     </style>
@@ -52,7 +52,26 @@
           Oops!! Sorry, There is no content here
         </h1>
       </div>
-      <div id="video-container" class="grid grid-cols-3 gap-4 p-4"></div>
+      <div
+        id="video-container"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 p-4"
+      >
+      
+    </div>
+    <!-- You can open the modal using ID.showModal() method -->
+      <dialog id="video_details" class="modal">
+          <div class="modal-box">
+            <form method="dialog">
+              <button
+                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              >
+                ✕
+              </button>
+            </form>
+            <h3 class="text-lg font-bold">Details</h3>
+            <div id="video_details-container"></div>
+          </div>
+        </dialog>
     </main>
 
     <script src="script/index.js"></script>
